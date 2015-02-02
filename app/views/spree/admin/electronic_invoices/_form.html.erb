@@ -1,0 +1,37 @@
+<div class="row">
+  <%= f.field_container :nfe_code, :class => ['form-group col-md-12'] do %>
+      <%= f.label :nfe_code, t('spree.code') %>
+      <%= f.hidden_field :nfe_code %>
+      <%= f.error_message_on :nfe_code %>
+  <% end %>
+
+  <div class="col-md-6">
+    <%= f.text_field :nfe_code, class: 'form-control title', id: 'nfe-code-text', name: nil %>
+  </div>
+
+  <div class="col-md-6">
+    <%= f.select :nfe_code, Spree::NfeProduct.order(description: :desc).pluck(:description, :code).map { |o| ["#{o[0]} - #{o[1]}", o[1]]}, {}, {class: '#select2 form-control', id: 'nfe-code-select', name: nil} %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div data-hook="admin_product_form_nfe_product_source">
+      <%= f.field_container :nfe_product_source_id, :class => ['form-group'] do %>
+          <%= f.label :nfe_product_source_id, t('spree.product_source') %>
+          <%= f.select :nfe_product_source_id, Spree::NfeProductSource.pluck(:description, :id), {}, {class: 'select2'} %>
+          <%= f.error_message_on :nfe_product_source_id %>
+      <% end %>
+    </div>
+
+    <div data-hook="admin_product_form_nfe_tax_replacement">
+      <%= f.field_container :nfe_tax_replacement, :class => ['form-group'] do %>
+          <%= f.label :nfe_tax_replacement, t('spree.tax_replacement') %>
+          <%= f.select :nfe_tax_replacement, [['Sim', 1], ['Não', 0]], {}, {class: 'form-control title'} %>
+          <%= f.error_message_on :nfe_tax_replacement %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'spree/backend/spree_nfe' %>
